@@ -1,8 +1,6 @@
 package org.example;
 
 
-import com.sun.tools.javac.util.ArrayUtils;
-
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
