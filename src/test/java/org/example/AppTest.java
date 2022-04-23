@@ -1,7 +1,6 @@
 package org.example;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -24,7 +23,6 @@ public class AppTest
             System.out.println(test);
             i++;
         }
-
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -34,4 +32,18 @@ public class AppTest
             myIterator.next();
         }
     }
+    @Test( expected = IllegalStateException.class)
+    public void MyIteratorRemoveBeforeNextTest(){
+        MyIterator myIterator = new MyIterator(testArray);
+        myIterator.remove();
+    }
+    @Test( expected = IllegalStateException.class)
+    public void MyIteratorRemoveTwiceTest(){
+        MyIterator myIterator = new MyIterator(testArray);
+        myIterator.next();
+        myIterator.remove();
+        myIterator.remove();
+    }
+
+
 }

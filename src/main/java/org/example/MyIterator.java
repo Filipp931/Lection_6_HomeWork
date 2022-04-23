@@ -1,7 +1,5 @@
 package org.example;
 
-
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -9,7 +7,8 @@ public class MyIterator <T> implements Iterator {
     private T[] object;
     private int index = 0;
     private int length;
-
+    private boolean elementWasRemoved = false;
+    private boolean methodNextHasBeenCalled = false;
 
     public MyIterator(T[] object) {
         this.object = object;
@@ -24,6 +23,10 @@ public class MyIterator <T> implements Iterator {
     @Override
     public T next() {
         if(index < length) {
+            if(elementWasRemoved) {
+                elementWasRemoved = false;
+            }
+            methodNextHasBeenCalled = true;
             return  object[index++];
         } else {
             throw new NoSuchElementException("No elements remain");
@@ -32,12 +35,19 @@ public class MyIterator <T> implements Iterator {
 
     @Override
     public void remove() {
+        if(elementWasRemoved || !methodNextHasBeenCalled) {
+            throw new IllegalStateException();
+        }
         int tempLength = length-1;
         T[] temp = (T[]) new Object[tempLength];
-        if (index >= 0) System.arraycopy(object, 0, temp, 0, index);
-        if (length + 1 - (index + 1) >= 0)
-            System.arraycopy(object, index + 1, temp, index + 1, length + 1 - (index + 1));
+        for (int i = 0; i < index; i++) {
+            temp[i] = object[i];
+        }
+        for (int i = index+1; i < length; i++) {
+            temp[i-1] = object[i];
+        }
         object = temp;
         length = tempLength;
+        elementWasRemoved = true;
     }
 }
