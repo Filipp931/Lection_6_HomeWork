@@ -170,6 +170,7 @@ public class DAO {
             person.getGifts().add(gift);
         }
     }
+
     public static void removeGift(Gift gift, Person person) throws PersonNotFoundException, PersonDoesNotHaveThisGiftException {
         if(checkGift(gift, person)) {
             person.getGifts().remove(gift);

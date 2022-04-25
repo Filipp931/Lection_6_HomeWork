@@ -4,7 +4,6 @@ import PhotoService.PhotoService;
 import org.API.messenger;
 import org.junit.Test;
 
-;
 
 /**
  * Unit test for simple App.
